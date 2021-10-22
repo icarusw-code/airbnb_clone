@@ -1,5 +1,4 @@
 from django.contrib import admin
-from django.contrib.admin.helpers import AdminForm
 from . import models
 
 
@@ -8,4 +7,4 @@ class ReviewAdmin(admin.ModelAdmin):
 
     """Review Admin Definition"""
 
-    pass
+    list_display = ("__str__", "rating_average")
