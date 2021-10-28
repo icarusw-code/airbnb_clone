@@ -64,7 +64,6 @@ class Photo(core_models.TimeStampedModel):
 
 
 class Room(core_models.TimeStampedModel):
-
     """Room Model Definition"""
 
     name = models.CharField(max_length=140)
@@ -90,6 +89,10 @@ class Room(core_models.TimeStampedModel):
     facilities = models.ManyToManyField("Facility", related_name="rooms", blank=True)
     house_rules = models.ManyToManyField("HouseRule", related_name="rooms", blank=True)
 
+    def save(self, *args, **kwargs):
+        self.city = str.capitalize(self.city)
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return self.name
 
@@ -98,4 +101,4 @@ class Room(core_models.TimeStampedModel):
         all_ratings = 0
         for review in all_reviews:
             all_ratings += review.rating_average()
-        return round(all_ratings / len(all_reviews), 2)
+        return all_ratings / len(all_reviews)
